@@ -5,6 +5,19 @@
   --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(28, 25, 23, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(28, 25, 23, 0);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
 @layer components {
   .pagy {
     --B: 1;

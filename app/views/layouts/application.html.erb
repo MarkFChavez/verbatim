@@ -26,11 +26,16 @@
   <body class="bg-stone-50 text-stone-900 antialiased">
     <% unless content_for?(:hide_header) %>
       <!-- Site Header -->
-      <header class="bg-stone-900 px-6 py-6 text-center">
-        <%= link_to root_path, class: "inline-block" do %>
-          <h1 class="font-serif text-3xl font-medium tracking-tight text-white">Verbatim</h1>
-          <p class="text-sm text-stone-400">A typing practice app for reading books</p>
-        <% end %>
+      <header class="bg-stone-900 px-6 py-6">
+        <div class="flex items-center justify-between max-w-6xl mx-auto">
+          <%= link_to root_path, class: "inline-block" do %>
+            <h1 class="font-serif text-5xl font-medium tracking-tight text-white">Verbatim</h1>
+            <p class="text-sm text-stone-400">A typing practice app for reading books</p>
+          <% end %>
+          <% if current_user %>
+            <%= button_to "Logout", logout_path, method: :delete, class: "px-3 py-1 text-sm text-stone-400 hover:text-white transition-colors" %>
+          <% end %>
+        </div>
       </header>
     <% end %>
 
