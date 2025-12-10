@@ -1,0 +1,86 @@
+# Verbatim Configuration
+# Adjust these settings to control how books are parsed and passages are generated.
+
+# Passage splitting settings
+passage:
+  min_length: 150        # Minimum characters per passage
+  max_length: 300        # Maximum characters per passage (soft limit - won't break sentences)
+
+# Chapter parsing settings
+chapter:
+  min_length: 200        # Chapters shorter than this get merged with the next chapter
+
+# Patterns for chapters to skip (front/back matter)
+# These are matched case-insensitively against chapter titles
+skip_patterns:
+  - copyright
+  - acknowledgements?
+  - table\s+of\s+contents
+  - contents
+  - dedication
+  - about\s+the\s+author
+  - also\s+by
+  - index
+  - appendix
+  - notes
+  - bibliography
+  - glossary
+  - colophon
+  - title\s+page
+  - half\s+title
+  - frontispiece
+
+# Character replacements for typing
+# Maps special characters to keyboard-typeable equivalents
+replacements:
+  # Smart quotes -> straight quotes
+  "\u201c": '"'      # left double quote "
+  "\u201d": '"'      # right double quote "
+  "\u2018": "'"      # left single quote '
+  "\u2019": "'"      # right single quote ' (apostrophe)
+  "\u201a": "'"      # single low quote
+  "\u201e": '"'      # double low quote
+
+  # Dashes
+  "\u2014": "--"     # em-dash
+  "\u2013": "-"      # en-dash
+  "\u2012": "-"      # figure dash
+  "\u2015": "--"     # horizontal bar
+
+  # Ellipsis
+  "\u2026": "..."    # ellipsis
+
+  # Spaces
+  "\u00a0": " "      # non-breaking space
+  "\u2003": " "      # em space
+  "\u2002": " "      # en space
+  "\u2009": " "      # thin space
+  "\u200a": " "      # hair space
+  "\u200b": ""       # zero-width space (remove)
+
+  # Punctuation
+  "\u2022": "-"      # bullet
+  "\u2023": ">"      # triangular bullet
+  "\u2043": "-"      # hyphen bullet
+  "\u00ab": "<<"     # left guillemet
+  "\u00bb": ">>"     # right guillemet
+  "\u2039": "<"      # single left guillemet
+  "\u203a": ">"      # single right guillemet
+
+  # Legal/trademark symbols
+  "\u00a9": "(c)"    # copyright
+  "\u00ae": "(R)"    # registered
+  "\u2122": "(TM)"   # trademark
+  "\u2120": "(SM)"   # service mark
+
+  # Other symbols
+  "\u00a7": "S."     # section
+  "\u00b6": "P."     # pilcrow/paragraph
+  "\u00a4": "$"      # currency
+  "\u00a5": "Y"      # yen
+  "\u00a3": "L"      # pound
+  "\u20ac": "E"      # euro
+  "\u00b0": " degrees"  # degree
+  "\u00b1": "+/-"    # plus-minus
+  "\u00d7": "x"      # multiplication
+  "\u00f7": "/"      # division

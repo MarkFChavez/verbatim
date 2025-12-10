@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   end
 
   def show
-    @chapters = @book.chapters.includes(:passages)
+    @pagy, @chapters = pagy(@book.chapters.includes(:passages))
   end
 
   def new

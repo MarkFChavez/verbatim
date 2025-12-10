@@ -5,28 +5,13 @@ class EpubParserService
   Result = Struct.new(:title, :author, :cover, :chapters, keyword_init: true)
   ChapterData = Struct.new(:title, :content, keyword_init: true)
 
-  MIN_CHAPTER_LENGTH = 200
+  def self.min_chapter_length
+    VerbatimConfig.chapter_min_length
+  end
 
-  # Patterns for chapters to skip (front/back matter, not story content)
-  # Note: prologue, epilogue, introduction, preface, foreword, afterword are story content - keep them
-  SKIP_TITLE_PATTERNS = /\b(
-    copyright|
-    acknowledgements?|
-    table\s+of\s+contents|
-    contents|
-    dedication|
-    about\s+the\s+author|
-    also\s+by|
-    index|
-    appendix|
-    notes|
-    bibliography|
-    glossary|
-    colophon|
-    title\s+page|
-    half\s+title|
-    frontispiece
-  )\b/ix
+  def self.skip_title_patterns
+    VerbatimConfig.skip_title_patterns
+  end
 
   def initialize(epub_file)
     @epub_file = epub_file
@@ -166,7 +151,7 @@ class EpubParserService
     current = chapters.first
 
     chapters[1..].each do |chapter|
-      if current.content.length < MIN_CHAPTER_LENGTH
+      if current.content.length < self.class.min_chapter_length
         # Merge with next chapter
         current = ChapterData.new(
           title: [ current.title, chapter.title ].compact.join(" - "),
@@ -184,7 +169,9 @@ class EpubParserService
 
   def skip_chapter?(title)
     return false if title.blank?
-    title.match?(SKIP_TITLE_PATTERNS)
+    pattern = self.class.skip_title_patterns
+    return false unless pattern
+    title.match?(pattern)
   end
 
   def extract_chapter_title(doc)

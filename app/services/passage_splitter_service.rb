@@ -1,11 +1,11 @@
 class PassageSplitterService
-  MIN_LENGTH = 500
-  MAX_LENGTH = 1000
   SENTENCE_ENDINGS = /([.!?]["']?\s+)/
   PARAGRAPH_BREAK = "\n\n"
 
   def initialize(text)
     @text = text.to_s.strip
+    @min_length = VerbatimConfig.passage_min_length
+    @max_length = VerbatimConfig.passage_max_length
   end
 
   def split
@@ -28,12 +28,12 @@ class PassageSplitterService
         "#{current_passage}#{PARAGRAPH_BREAK}#{paragraph}"
       end
 
-      if potential_passage.length >= MIN_LENGTH && potential_passage.length <= MAX_LENGTH
+      if potential_passage.length >= @min_length && potential_passage.length <= @max_length
         # Perfect length, save it
         passages << potential_passage
         current_passage = ""
-      elsif potential_passage.length > MAX_LENGTH
-        if current_passage.length >= MIN_LENGTH
+      elsif potential_passage.length > @max_length
+        if current_passage.length >= @min_length
           # Current passage is good enough, save it
           passages << current_passage
           current_passage = paragraph
@@ -54,7 +54,7 @@ class PassageSplitterService
 
     # Don't forget the last passage
     if current_passage.present?
-      if passages.any? && current_passage.length < MIN_LENGTH
+      if passages.any? && current_passage.length < @min_length
         # Merge with previous if too short
         last_passage = passages.pop
         passages << "#{last_passage}#{PARAGRAPH_BREAK}#{current_passage}"
@@ -76,11 +76,11 @@ class PassageSplitterService
     sentences.each do |sentence|
       potential = current.empty? ? sentence : "#{current} #{sentence}"
 
-      if potential.length >= MIN_LENGTH && potential.length <= MAX_LENGTH
+      if potential.length >= @min_length && potential.length <= @max_length
         passages << potential.strip
         current = ""
-      elsif potential.length > MAX_LENGTH
-        if current.length >= MIN_LENGTH
+      elsif potential.length > @max_length
+        if current.length >= @min_length
           passages << current.strip
           current = sentence
         else
@@ -95,7 +95,7 @@ class PassageSplitterService
 
     # Handle remainder
     if current.present?
-      if passages.any? && current.length < MIN_LENGTH
+      if passages.any? && current.length < @min_length
         last = passages.pop
         passages << "#{last} #{current}".strip
       else
