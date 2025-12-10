@@ -1,24 +1,33 @@
-# README
+# Verbatim
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A typing practice app that lets you improve your typing by copying passages from books.
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+Requirements:
+- Ruby 3.2.2
+- PostgreSQL
+- Node.js (for asset compilation)
 
-* System dependencies
+```bash
+# Install dependencies
+bundle install
 
-* Configuration
+# Setup database
+bin/rails db:setup
 
-* Database creation
+# Start the server
+bin/rails server
+```
 
-* Database initialization
+## Configuration
 
-* How to run the test suite
+Typing parameters (passage length, character replacements, etc.) can be configured in:
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+config/typing_parameters.yml
+```
 
-* Deployment instructions
+## Supported Formats
 
-* ...
+Currently only `.epub` files are supported.
