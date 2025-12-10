@@ -1,0 +1,1 @@
+- always prioritize pending tasks in PENDING_TASKS.md
