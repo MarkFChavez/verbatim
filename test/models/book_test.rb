@@ -98,4 +98,25 @@ class BookTest < ActiveSupport::TestCase
     book = books(:empty_book)
     assert_equal 0, book.total_words
   end
+
+  test "completed? returns false for book with no passages" do
+    book = books(:empty_book)
+    assert_not book.completed?
+  end
+
+  test "completed? returns false when not all passages are completed" do
+    book = books(:great_gatsby)
+    # great_gatsby has some passages without typing sessions
+    assert_not book.completed?
+  end
+
+  test "completed? returns true when all passages have typing sessions" do
+    book = books(:great_gatsby)
+    # Complete all passages
+    book.passages.each do |passage|
+      passage.typing_sessions.create!(wpm: 50, accuracy: 95.0, duration_seconds: 60) unless passage.typing_sessions.exists?
+    end
+
+    assert book.completed?
+  end
 end
