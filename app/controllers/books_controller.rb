@@ -74,7 +74,7 @@ class BooksController < ApplicationController
   end
 
   def restart
-    @book.typing_sessions.destroy_all
+    TypingSession.where(passage: @book.passages).destroy_all
     redirect_to continue_book_path(@book)
   end
 
