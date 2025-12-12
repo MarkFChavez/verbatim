@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [ :show, :destroy, :continue ]
+  before_action :set_book, only: [ :show, :destroy, :continue, :search ]
 
   def index
     @books = current_user.books.order(created_at: :desc)
@@ -71,6 +71,12 @@ class BooksController < ApplicationController
     else
       redirect_to @book, alert: "No passages found in this book."
     end
+  end
+
+  def search
+    @query = params[:q].to_s.strip
+    @results = @query.present? ? @book.passages.search(@query).includes(:chapter).limit(20) : []
+    @current_passage = @book.current_passage
   end
 
   private

@@ -6,6 +6,8 @@ class Passage < ApplicationRecord
   validates :content, presence: true
   validates :position, presence: true
 
+  scope :search, ->(query) { where("content ILIKE ?", "%#{query}%") }
+
   before_save :calculate_word_count
 
   def completed?

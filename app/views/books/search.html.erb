@@ -1,0 +1,25 @@
+<turbo-frame id="search-results">
+  <% if @query.present? %>
+    <% if @results.any? %>
+      <div class="space-y-2">
+        <p class="text-sm text-stone-500 mb-3"><%= @results.size %> result<%= @results.size == 1 ? '' : 's' %> found</p>
+        <% @results.each do |passage| %>
+          <%= link_to passage_path(passage), class: "block p-3 bg-stone-50 rounded-lg hover:bg-stone-100 transition-colors", data: { turbo_frame: "_top" } do %>
+            <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-medium text-stone-500"><%= passage.chapter.title || "Chapter #{passage.chapter.position}" %></span>
+                <% if passage.id == @current_passage&.id %>
+                  <span class="text-xs font-medium text-white bg-stone-700 px-1.5 py-0.5 rounded">Current</span>
+                <% end %>
+              </div>
+              <span class="text-xs text-stone-400">Passage <%= passage.position %></span>
+            </div>
+            <p class="text-sm text-stone-700 line-clamp-2"><%= highlight_search_result(passage.content, @query) %></p>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-stone-500 py-4 text-center">No passages found matching "<%= @query %>"</p>
+    <% end %>
+  <% end %>
+</turbo-frame>
