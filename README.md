@@ -13,6 +13,9 @@ Requirements:
 # Install dependencies
 bundle install
 
+# Setup environment variables
+cp .env.example .env
+
 # Setup database
 bin/rails db:setup
 
