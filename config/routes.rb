@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :books, only: [ :index, :show, :new, :create, :destroy ] do
     get :continue, on: :member
     get :search, on: :member
+    post :restart, on: :member
   end
 
   resources :staged_books, only: [ :show, :update, :destroy ] do

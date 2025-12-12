@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [ :show, :destroy, :continue, :search ]
+  before_action :set_book, only: [ :show, :destroy, :continue, :search, :restart ]
 
   def index
     @books = current_user.books.order(created_at: :desc)
@@ -64,11 +64,6 @@ class BooksController < ApplicationController
   end
 
   def continue
-    if @book.completed?
-      redirect_to @book, notice: "You've already completed this book."
-      return
-    end
-
     passage = @book.current_passage
 
     if passage
@@ -76,6 +71,11 @@ class BooksController < ApplicationController
     else
       redirect_to @book, alert: "No passages found in this book."
     end
+  end
+
+  def restart
+    @book.typing_sessions.destroy_all
+    redirect_to continue_book_path(@book)
   end
 
   def search
