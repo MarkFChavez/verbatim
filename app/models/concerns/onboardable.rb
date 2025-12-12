@@ -9,8 +9,8 @@ module Onboardable
 
   def create_sample_book
     book = books.create!(
-      title: "Typing Practice",
-      author: "Verbatim",
+      title: ENV.fetch("SAMPLE_BOOK_TITLE", "Typing Practice"),
+      author: ENV.fetch("SAMPLE_BOOK_AUTHOR", "Verbatim"),
       uploaded_at: Time.current
     )
 

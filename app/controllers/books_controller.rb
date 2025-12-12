@@ -75,7 +75,7 @@ class BooksController < ApplicationController
 
   def search
     @query = params[:q].to_s.strip
-    @results = @query.present? ? @book.passages.search(@query).includes(:chapter).limit(20) : []
+    @results = @query.present? ? @book.passages.search(@query).includes(:chapter).limit(ENV.fetch("SEARCH_RESULT_LIMIT", "5").to_i) : []
     @current_passage = @book.current_passage
   end
 

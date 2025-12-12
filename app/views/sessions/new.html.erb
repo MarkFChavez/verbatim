@@ -47,6 +47,19 @@
         </ul>
       </div>
 
+      <!-- Get Started -->
+      <div class="text-sm">
+        <p class="text-stone-400 mb-2">Get started:</p>
+        <div class="flex items-center gap-2 bg-stone-800 px-3 py-2 rounded">
+          <code class="flex-1 text-stone-300 font-mono text-xs">git clone <%= ENV.fetch("GITHUB_CLONE_URL") %></code>
+          <button type="button" data-controller="clipboard" data-clipboard-text-value="git clone <%= ENV.fetch("GITHUB_CLONE_URL") %>" data-action="click->clipboard#copy" class="text-stone-400 hover:text-white transition-colors" title="Copy to clipboard">
+            <svg class="w-4 h-4" data-clipboard-target="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
       <!-- Visual UI Preview/Mockup -->
       <div class="hidden sm:block">
         <div class="bg-stone-800 rounded-lg p-6 border border-stone-700">
