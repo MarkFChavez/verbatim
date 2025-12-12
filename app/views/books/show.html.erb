@@ -113,15 +113,35 @@
 
   <% if @current_passage %>
     <section class="mb-8">
-      <div class="flex items-center gap-2 mb-4">
-        <span class="text-sm font-medium text-stone-500">Continue from here</span>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-sm font-semibold text-stone-700 uppercase tracking-wide">Continue Reading</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-stone-700 text-white">
+          Current
+        </span>
       </div>
-      <h2 class="text-xl font-medium text-stone-900 mb-4">
+
+      <h2 class="text-xl font-semibold text-stone-900 mb-4">
         <%= @current_passage.chapter.title.presence || "Chapter #{@current_passage.chapter.position}" %>
       </h2>
-      <div class="border border-stone-200 border-l-4 border-l-stone-700 rounded-lg p-6 bg-stone-50">
-        <p class="text-sm text-stone-500 mb-3">Passage <%= @current_passage.position %></p>
-        <p class="text-stone-700 line-clamp-3"><%= truncate(@current_passage.content, length: 200) %></p>
+
+      <div class="relative">
+        <div class="absolute -left-1 top-0 bottom-0 w-1 bg-stone-700 rounded-full"></div>
+        <div class="border-2 border-stone-300 rounded-xl p-6 bg-white shadow-sm ml-3">
+          <div class="flex items-center justify-between mb-3">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-stone-100 text-stone-600 border border-stone-200">
+              Passage <%= @current_passage.position %>
+            </span>
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-stone-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-stone-700"></span>
+              </span>
+              <span class="text-xs font-medium text-stone-500">Reading here</span>
+            </div>
+          </div>
+
+          <p class="text-stone-700 leading-relaxed line-clamp-3"><%= truncate(@current_passage.content, length: 200) %></p>
+        </div>
       </div>
     </section>
   <% else %>
