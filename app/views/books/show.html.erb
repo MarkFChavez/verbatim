@@ -51,13 +51,28 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-4 text-sm text-stone-500 mb-8">
+      <div class="flex items-center gap-4 text-sm text-stone-500 mb-4">
         <span><%= @book.chapters.count %> chapters</span>
         <span class="text-stone-300">|</span>
         <span><%= @book.passages.count %> passages</span>
         <span class="text-stone-300">|</span>
         <span><%= number_with_delimiter(@book.total_words) %> words</span>
       </div>
+
+      <% if @book.passages.joins(:typing_sessions).exists? %>
+        <div class="flex items-center gap-6 mb-8">
+          <div>
+            <span class="text-2xl font-mono font-medium text-stone-900"><%= @book.average_wpm %></span>
+            <span class="text-sm text-stone-500 ml-1">avg wpm</span>
+          </div>
+          <div>
+            <span class="text-2xl font-mono font-medium text-stone-900"><%= @book.average_accuracy %>%</span>
+            <span class="text-sm text-stone-500 ml-1">accuracy</span>
+          </div>
+        </div>
+      <% else %>
+        <div class="mb-8"></div>
+      <% end %>
 
       <div class="flex items-center gap-3">
         <% unless @book.completed? %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_11_153510) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_12_143125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -69,8 +69,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_11_153510) do
     t.integer "word_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "previous_passage_id"
+    t.bigint "next_passage_id"
     t.index ["chapter_id", "position"], name: "index_passages_on_chapter_id_and_position"
     t.index ["chapter_id"], name: "index_passages_on_chapter_id"
+    t.index ["next_passage_id"], name: "index_passages_on_next_passage_id"
+    t.index ["previous_passage_id"], name: "index_passages_on_previous_passage_id"
   end
 
   create_table "staged_books", force: :cascade do |t|
@@ -107,6 +111,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_11_153510) do
   add_foreign_key "books", "users"
   add_foreign_key "chapters", "books"
   add_foreign_key "passages", "chapters"
+  add_foreign_key "passages", "passages", column: "next_passage_id", name: "fk_passages_next_passage", on_delete: :nullify
+  add_foreign_key "passages", "passages", column: "previous_passage_id", name: "fk_passages_previous_passage", on_delete: :nullify
   add_foreign_key "staged_books", "users"
   add_foreign_key "typing_sessions", "passages"
 end

@@ -32,4 +32,18 @@ class Book < ApplicationRecord
   def total_words
     passages.sum(:word_count)
   end
+
+  def average_wpm
+    TypingSession.joins(passage: :chapter)
+      .where(chapters: { book_id: id })
+      .where("wpm > 0")
+      .average(:wpm)&.round || 0
+  end
+
+  def average_accuracy
+    TypingSession.joins(passage: :chapter)
+      .where(chapters: { book_id: id })
+      .where("wpm > 0")
+      .average(:accuracy)&.round || 0
+  end
 end
