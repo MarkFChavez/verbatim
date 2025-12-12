@@ -61,7 +61,7 @@
 
       <div class="flex items-center gap-3">
         <% unless @book.completed? %>
-          <%= link_to continue_book_path(@book), class: "px-5 py-2.5 bg-stone-900 text-white font-medium rounded hover:bg-stone-800 transition-colors cursor-pointer" do %>
+          <%= link_to practice_book_path(@book), class: "px-5 py-2.5 bg-stone-900 text-white font-medium rounded hover:bg-stone-800 transition-colors cursor-pointer" do %>
             <%= @book.progress_percentage > 0 ? "Continue Reading" : "Start Reading" %>
           <% end %>
         <% end %>

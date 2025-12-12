@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy"
 
   resources :books, only: [ :index, :show, :new, :create, :destroy ] do
-    get :continue, on: :member
+    get :practice, on: :member
     get :search, on: :member
     post :restart, on: :member
   end
@@ -15,8 +15,9 @@ Rails.application.routes.draw do
     post :finalize, on: :member
   end
 
-  resources :passages, only: [ :show ] do
+  resources :passages, only: [] do
     post :complete, on: :member
+    post :jump, on: :member
   end
 
   get "typing_stats", to: "typing_stats#index"

@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [ :show, :destroy, :continue, :search, :restart ]
+  before_action :set_book, only: [ :show, :destroy, :practice, :search, :restart ]
 
   def index
     @books = current_user.books.order(created_at: :desc)
@@ -63,19 +63,20 @@ class BooksController < ApplicationController
     redirect_to books_path, notice: "Book deleted."
   end
 
-  def continue
-    passage = @book.current_passage
+  def practice
+    @passage = @book.current_passage
 
-    if passage
-      redirect_to passage_path(passage)
-    else
-      redirect_to @book, alert: "No passages found in this book."
+    if @passage.nil? || @book.completed?
+      redirect_to @book, alert: "No passages to practice."
+      return
     end
+
+    @chapter = @passage.chapter
   end
 
   def restart
     TypingSession.where(passage: @book.passages).destroy_all
-    redirect_to continue_book_path(@book)
+    redirect_to practice_book_path(@book)
   end
 
   def search

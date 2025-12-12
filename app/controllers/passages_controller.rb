@@ -1,28 +1,32 @@
 class PassagesController < ApplicationController
   before_action :set_passage
 
-  def show
-    @book = @passage.book
-    @chapter = @passage.chapter
-  end
-
   def complete
     typing_session = @passage.typing_sessions.build(typing_session_params)
 
     if typing_session.save
-      next_passage = @passage.next_passage
-
-      render json: {
-        success: true,
-        next_passage_url: next_passage ? passage_path(next_passage) : book_path(@passage.book),
-        has_next: next_passage.present?
-      }
+      render json: { success: true }
     else
       render json: {
         success: false,
         errors: typing_session.errors.full_messages
       }, status: :unprocessable_entity
     end
+  end
+
+  def jump
+    book = @passage.book
+
+    # Mark all passages before this one as skipped (create empty typing sessions)
+    passages_to_skip = book.passages.where("id < ?", @passage.id).where.not(
+      id: TypingSession.select(:passage_id)
+    )
+
+    passages_to_skip.find_each do |passage|
+      passage.typing_sessions.create!(wpm: 0, accuracy: 0, duration_seconds: 0)
+    end
+
+    redirect_to practice_book_path(book)
   end
 
   private

@@ -1,11 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["display", "input", "wpm", "accuracy", "progress", "timer", "hint", "loading"]
+  static targets = ["display", "input", "progress", "loading"]
   static values = {
     passageContent: String,
     passageId: Number,
-    nextPassageUrl: String,
+    nextUrl: String,
     bookUrl: String
   }
 
@@ -56,13 +56,10 @@ export default class extends Controller {
     // Start timer on first keystroke
     if (!this.startTime) {
       this.startTime = Date.now()
-      this.startTimer()
-      this.hideHint()
     }
 
     this.typedText = this.inputTarget.value
     this.updateDisplay()
-    this.updateStats()
     this.updateProgress()
 
     // Check for completion
@@ -93,23 +90,9 @@ export default class extends Controller {
     this.startTime = null
     this.completed = false
 
-    // Clear timer
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval)
-    }
-
     // Reset UI
     this.inputTarget.value = ""
-    this.wpmTarget.textContent = "0"
-    this.accuracyTarget.textContent = "100"
-    this.timerTarget.textContent = "0:00"
     this.renderPassage()
-
-    // Show hint again
-    if (this.hasHintTarget) {
-      this.hintTarget.classList.remove("hidden")
-    }
-
     this.focusInput()
   }
 
@@ -162,54 +145,13 @@ export default class extends Controller {
     }
   }
 
-  updateStats() {
-    const elapsedMinutes = (Date.now() - this.startTime) / 60000
-    const content = this.passageContentValue
-
-    // Standard WPM calculation: (characters / 5) / minutes
-    const standardWords = this.typedText.length / 5
-    const wpm = elapsedMinutes >= 1/60 ? Math.round(standardWords / elapsedMinutes) : 0
-
-    // Calculate accuracy from current typed text vs content
-    let errors = 0
-    for (let i = 0; i < this.typedText.length; i++) {
-      if (this.typedText[i] !== content[i]) {
-        errors++
-      }
-    }
-    const accuracy = this.typedText.length > 0
-      ? Math.round(((this.typedText.length - errors) / this.typedText.length) * 100)
-      : 100
-
-    this.wpmTarget.textContent = wpm
-    this.accuracyTarget.textContent = accuracy
-  }
-
   updateProgress() {
     const progress = (this.typedText.length / this.passageContentValue.length) * 100
     this.progressTarget.style.width = `${progress}%`
   }
 
-  startTimer() {
-    this.timerInterval = setInterval(() => {
-      if (this.startTime && !this.completed) {
-        const elapsed = Math.floor((Date.now() - this.startTime) / 1000)
-        const minutes = Math.floor(elapsed / 60)
-        const seconds = elapsed % 60
-        this.timerTarget.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`
-      }
-    }, 1000)
-  }
-
-  hideHint() {
-    if (this.hasHintTarget) {
-      this.hintTarget.classList.add("hidden")
-    }
-  }
-
   async complete() {
     this.completed = true
-    clearInterval(this.timerInterval)
 
     // Show loading indicator
     if (this.hasLoadingTarget) {
@@ -234,7 +176,7 @@ export default class extends Controller {
 
     // Post results to server
     try {
-      const response = await fetch(`/passages/${this.passageIdValue}/complete`, {
+      await fetch(`/passages/${this.passageIdValue}/complete`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -249,14 +191,10 @@ export default class extends Controller {
         })
       })
 
-      const data = await response.json()
-
-      if (data.success) {
-        // Brief pause to show completion, then navigate
-        setTimeout(() => {
-          window.Turbo.visit(data.next_passage_url)
-        }, 500)
-      }
+      // Brief pause to show completion, then navigate
+      setTimeout(() => {
+        window.Turbo.visit(this.nextUrlValue)
+      }, 500)
     } catch (error) {
       console.error("Error saving session:", error)
     }
@@ -269,8 +207,6 @@ export default class extends Controller {
   }
 
   disconnect() {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval)
-    }
+    // Cleanup if needed
   }
 }
