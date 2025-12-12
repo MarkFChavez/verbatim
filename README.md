@@ -1,4 +1,4 @@
-# Verbatim
+# TypeLit
 
 A typing practice app that lets you improve your typing by copying passages from books.
 

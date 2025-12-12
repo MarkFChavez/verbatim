@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Verbatim" %></title>
+    <title><%= content_for(:title) || "TypeLit" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-refresh-method" content="morph">
     <meta name="turbo-refresh-scroll" content="preserve">
@@ -31,7 +31,7 @@
       <header class="bg-stone-900 px-6 py-6">
         <div class="flex items-center justify-between max-w-6xl mx-auto">
           <%= link_to root_path, class: "inline-block" do %>
-            <h1 class="font-serif text-5xl font-medium tracking-tight text-white">Verbatim</h1>
+            <h1 class="font-serif text-5xl font-medium tracking-tight text-white">TypeLit</h1>
             <p class="text-sm text-stone-400">A typing practice app for reading books</p>
           <% end %>
           <% if current_user %>

@@ -4,8 +4,8 @@ class PassageSplitterService
 
   def initialize(text)
     @text = text.to_s.strip
-    @min_length = VerbatimConfig.passage_min_length
-    @max_length = VerbatimConfig.passage_max_length
+    @min_length = TypelitConfig.passage_min_length
+    @max_length = TypelitConfig.passage_max_length
   end
 
   def split

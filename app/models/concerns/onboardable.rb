@@ -10,7 +10,7 @@ module Onboardable
   def create_sample_book
     book = books.create!(
       title: "Typing Practice",
-      author: "Verbatim",
+      author: "TypeLit",
       uploaded_at: Time.current
     )
 

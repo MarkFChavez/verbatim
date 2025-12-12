@@ -1,4 +1,4 @@
-class VerbatimConfig
+class TypelitConfig
   class << self
     def config
       @config ||= load_config

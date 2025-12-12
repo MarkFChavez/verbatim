@@ -1,7 +1,7 @@
 class TextNormalizerService
   def initialize(text)
     @text = text.to_s
-    @replacements = VerbatimConfig.replacements
+    @replacements = TypelitConfig.replacements
   end
 
   def normalize

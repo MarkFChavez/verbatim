@@ -6,11 +6,11 @@ class EpubParserService
   ChapterData = Struct.new(:title, :content, keyword_init: true)
 
   def self.min_chapter_length
-    VerbatimConfig.chapter_min_length
+    TypelitConfig.chapter_min_length
   end
 
   def self.skip_title_patterns
-    VerbatimConfig.skip_title_patterns
+    TypelitConfig.skip_title_patterns
   end
 
   def initialize(epub_file)
