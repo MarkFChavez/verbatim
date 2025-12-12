@@ -35,7 +35,7 @@
             <p class="text-sm text-stone-400">A typing practice app for reading books</p>
           <% end %>
           <% if current_user %>
-            <%= button_to "Logout", logout_path, method: :delete, class: "px-4 py-1.5 text-sm text-stone-300 border border-stone-600 hover:border-stone-400 hover:text-white rounded transition-colors" %>
+            <%= button_to "Logout", logout_path, method: :delete, class: "px-4 py-1.5 text-sm text-stone-300 border border-stone-600 hover:border-stone-400 hover:text-white rounded transition-colors cursor-pointer" %>
           <% end %>
         </div>
       </header>
