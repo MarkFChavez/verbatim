@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+staged_gatsby:
+  user: alice
+  title: The Great Gatsby
+  author: F. Scott Fitzgerald
+  chapters_data: <%= [
+    { "title" => "Chapter 1", "content" => "In my younger years.", "included" => true },
+    { "title" => "Chapter 2", "content" => "About halfway between.", "included" => true },
+    { "title" => "Copyright", "content" => "All rights reserved.", "included" => false }
+  ].to_json %>
+
+staged_empty:
+  user: bob
+  title: Empty Staged Book
+  author: Unknown
+  chapters_data: <%= [].to_json %>

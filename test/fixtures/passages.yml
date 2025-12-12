@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+gatsby_passage_one:
+  chapter: gatsby_chapter_one
+  content: "In my younger and more vulnerable years my father gave me some advice."
+  position: 1
+  word_count: 13
+
+gatsby_passage_two:
+  chapter: gatsby_chapter_one
+  content: "Whenever you feel like criticizing anyone, he told me, just remember."
+  position: 2
+  word_count: 12
+
+gatsby_passage_three:
+  chapter: gatsby_chapter_two
+  content: "About halfway between West Egg and New York."
+  position: 1
+  word_count: 8
+
+moby_passage_one:
+  chapter: moby_chapter_one
+  content: "Call me Ishmael. Some years ago, never mind how long precisely."
+  position: 1
+  word_count: 11

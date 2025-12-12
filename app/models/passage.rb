@@ -28,12 +28,12 @@ class Passage < ApplicationRecord
 
   def previous_passage
     # First try previous passage in same chapter
-    same_chapter_prev = chapter.passages.where("position < ?", position).order(position: :desc).first
+    same_chapter_prev = chapter.passages.where("position < ?", position).reorder(position: :desc).first
     return same_chapter_prev if same_chapter_prev
 
     # Otherwise, last passage of previous chapter
     prev_chapter = book.chapters.where("position < ?", chapter.position).order(position: :desc).first
-    prev_chapter&.passages&.order(position: :desc)&.first
+    prev_chapter&.passages&.reorder(position: :desc)&.first
   end
 
   private

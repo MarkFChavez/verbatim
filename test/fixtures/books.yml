@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+great_gatsby:
+  user: alice
+  title: The Great Gatsby
+  author: F. Scott Fitzgerald
+  uploaded_at: <%= Time.current %>
+
+moby_dick:
+  user: alice
+  title: Moby Dick
+  author: Herman Melville
+  uploaded_at: <%= Time.current %>
+
+empty_book:
+  user: bob
+  title: Empty Book
+  author: Unknown
+  uploaded_at: <%= Time.current %>

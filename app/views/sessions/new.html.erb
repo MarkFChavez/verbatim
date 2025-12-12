@@ -2,7 +2,7 @@
 
 <div class="min-h-screen flex flex-col-reverse lg:flex-row">
   <!-- Left Side - Marketing Content (Dark) - Hidden on mobile -->
-  <div class="hidden lg:flex flex-1 bg-stone-900 text-white p-8 lg:p-12 xl:p-16 flex-col justify-center">
+  <div class="hidden lg:flex flex-1 bg-stone-900 text-white p-8 lg:p-12 xl:p-16 flex-col justify-start overflow-y-auto lg:h-screen">
     <div class="max-w-xl mx-auto w-full space-y-12">
 
       <!-- Branding -->
@@ -75,6 +75,38 @@
         </div>
       </div>
 
+      <!-- Self-Hosted Badge -->
+      <div class="bg-stone-800/50 rounded-lg p-5 border border-stone-700">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-stone-700 flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+            </svg>
+          </div>
+          <span class="text-white font-medium text-lg">Self-Hosted</span>
+        </div>
+        <ul class="text-stone-300 text-sm space-y-2">
+          <li class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Your data stays on your server
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Open source & fully transparent
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            No subscriptions, host once forever
+          </li>
+        </ul>
+      </div>
+
       <!-- Visual UI Preview/Mockup -->
       <div class="hidden sm:block">
         <div class="bg-stone-800 rounded-lg p-6 border border-stone-700">
@@ -105,7 +137,7 @@
   </div>
 
   <!-- Right Side - Login Form -->
-  <div class="flex-1 bg-stone-900 lg:bg-stone-50 p-8 pt-16 lg:p-12 xl:p-16 flex flex-col justify-start lg:justify-center min-h-screen lg:min-h-0">
+  <div class="flex-1 bg-stone-900 lg:bg-stone-50 p-8 pt-16 lg:p-12 xl:p-16 flex flex-col justify-start lg:justify-center min-h-screen lg:min-h-0 lg:h-screen lg:overflow-hidden">
     <div class="max-w-sm mx-auto w-full">
 
       <!-- Mobile Branding - Hidden on desktop -->

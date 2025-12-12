@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+gatsby_chapter_one:
+  book: great_gatsby
+  title: Chapter 1
+  position: 1
+
+gatsby_chapter_two:
+  book: great_gatsby
+  title: Chapter 2
+  position: 2
+
+moby_chapter_one:
+  book: moby_dick
+  title: Loomings
+  position: 1

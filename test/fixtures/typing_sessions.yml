@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+session_one:
+  passage: gatsby_passage_one
+  wpm: 65
+  accuracy: 98.5
+  duration_seconds: 30
+  completed_at: <%= Time.current %>
+
+session_two:
+  passage: gatsby_passage_one
+  wpm: 72
+  accuracy: 100
+  duration_seconds: 25
+  completed_at: <%= Time.current %>
+
+session_three:
+  passage: gatsby_passage_two
+  wpm: 55
+  accuracy: 95.0
+  duration_seconds: 35
+  completed_at: <%= Time.current %>
