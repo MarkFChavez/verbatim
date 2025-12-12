@@ -12,8 +12,6 @@ export default class extends Controller {
   connect() {
     this.typedText = ""
     this.startTime = null
-    this.errors = 0
-    this.totalTyped = 0
     this.completed = false
 
     this.renderPassage()
@@ -62,25 +60,13 @@ export default class extends Controller {
       this.hideHint()
     }
 
-    const typed = this.inputTarget.value
-    const content = this.passageContentValue
-
-    // Track total keystrokes for accuracy
-    if (typed.length > this.typedText.length) {
-      this.totalTyped++
-      const newCharIndex = typed.length - 1
-      if (newCharIndex < content.length && typed[newCharIndex] !== content[newCharIndex]) {
-        this.errors++
-      }
-    }
-
-    this.typedText = typed
+    this.typedText = this.inputTarget.value
     this.updateDisplay()
     this.updateStats()
     this.updateProgress()
 
     // Check for completion
-    if (typed.length >= content.length) {
+    if (this.typedText.length >= this.passageContentValue.length) {
       this.complete()
     }
   }
@@ -105,8 +91,6 @@ export default class extends Controller {
     // Reset state
     this.typedText = ""
     this.startTime = null
-    this.errors = 0
-    this.totalTyped = 0
     this.completed = false
 
     // Clear timer
@@ -180,14 +164,21 @@ export default class extends Controller {
 
   updateStats() {
     const elapsedMinutes = (Date.now() - this.startTime) / 60000
-    const wordsTyped = this.typedText.split(/\s+/).filter(w => w.length > 0).length
+    const content = this.passageContentValue
 
     // Standard WPM calculation: (characters / 5) / minutes
     const standardWords = this.typedText.length / 5
-    const wpm = elapsedMinutes > 0 ? Math.round(standardWords / elapsedMinutes) : 0
+    const wpm = elapsedMinutes >= 1/60 ? Math.round(standardWords / elapsedMinutes) : 0
 
-    const accuracy = this.totalTyped > 0
-      ? Math.round(((this.totalTyped - this.errors) / this.totalTyped) * 100)
+    // Calculate accuracy from current typed text vs content
+    let errors = 0
+    for (let i = 0; i < this.typedText.length; i++) {
+      if (this.typedText[i] !== content[i]) {
+        errors++
+      }
+    }
+    const accuracy = this.typedText.length > 0
+      ? Math.round(((this.typedText.length - errors) / this.typedText.length) * 100)
       : 100
 
     this.wpmTarget.textContent = wpm
@@ -228,8 +219,17 @@ export default class extends Controller {
     const durationSeconds = Math.round((Date.now() - this.startTime) / 1000)
     const standardWords = this.typedText.length / 5
     const wpm = Math.round(standardWords / (durationSeconds / 60))
-    const accuracy = this.totalTyped > 0
-      ? ((this.totalTyped - this.errors) / this.totalTyped) * 100
+
+    // Calculate final accuracy from typed text vs content
+    const content = this.passageContentValue
+    let errors = 0
+    for (let i = 0; i < this.typedText.length; i++) {
+      if (this.typedText[i] !== content[i]) {
+        errors++
+      }
+    }
+    const accuracy = this.typedText.length > 0
+      ? ((this.typedText.length - errors) / this.typedText.length) * 100
       : 100
 
     // Post results to server
