@@ -20,7 +20,7 @@ cp .env.example .env
 bin/rails db:setup
 
 # Start the server
-bin/rails server
+bin/dev
 ```
 
 ## Testing
